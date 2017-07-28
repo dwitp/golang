@@ -7,7 +7,6 @@ import (
     "log"
     "path"
     "bytes"
-    "math"
 )
 
 func main() {
