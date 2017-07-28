@@ -6,6 +6,7 @@ import (
     "os/exec"
     "log"
     "path"
+    "bytes"
 )
 
 func main() {
@@ -16,18 +17,25 @@ func main() {
     key := path.Base(dirPath)
 
     cmd := exec.Command("go", "install")
-    err = cmd.Start()
+    var out bytes.Buffer
+    var stderr bytes.Buffer
+    cmd.Stdout = &out
+    cmd.Stderr = &stderr
+    err = cmd.Run()
     if err != nil {
-        log.Fatal(err)
+        fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+        return
     }
+    fmt.Println(out.String())
 
 
     if key == "run" {
         log.Fatal("self install - exiting ...")
     }
-    out, err := exec.Command(key).Output()
+
+    _out, err := exec.Command(key).Output()
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Printf("%s\n", out)
+    fmt.Printf("%s\n", _out)
 }
