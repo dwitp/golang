@@ -13,3 +13,8 @@ func D(args ...interface{}) {
     fmt.Println("-----------------------------------------------------")
     fmt.Println()
 }
+
+
+func S(x []int) {
+    fmt.Printf("len=%d cap=%d %v\n", len(x), cap(x), x)
+}
